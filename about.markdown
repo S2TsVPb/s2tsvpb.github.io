@@ -4,15 +4,29 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
+## 你好，我是 S2TsVPb
 
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
+来自江苏南京，高中毕业于南师大附中，目前就读于**浙江大学竺可桢学院混合班**，主修计算机科学与技术。
 
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
+现居紫金港校区。
 
+---
 
-[jekyll-organization]: https://github.com/jekyll
+## 关于本网站
+
+这里是我的个人数字花园，主要存放：
+
+- 学习资料与心得
+- 评论随笔~~（牢骚怪话）~~
+- 生活杂记~~（外卖指南）~~
+- 摄影作品分享
+
+希望自己能坚持记录，踏实成长。
+
+---
+
+## 找到我
+
+- GitHub: [S2TsVPb](https://github.com/S2TsVPb)
+- 邮箱：`xuyixuan3236@126.com`
+  
