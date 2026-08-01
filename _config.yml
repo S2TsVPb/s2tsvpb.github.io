@@ -29,6 +29,10 @@ github_username:  S2TsVPb
 
 # Build settings
 theme: minima
+
+minima:
+  hide_site_feed_link: true
+
 plugins:
   - jekyll-feed
 
