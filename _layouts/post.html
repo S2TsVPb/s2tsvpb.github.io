@@ -1,0 +1,42 @@
+---
+layout: default
+---
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        {{ page.date | date: date_format }}
+      </time>
+      {%- if page.author -%}
+        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+      {%- endif -%}
+    </p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  {%- if site.disqus.shortname -%}
+    {%- include disqus_comments.html -%}
+  {%- endif -%}
+
+  <!-- 文章导航：下一篇（左） / 上一篇（右） -->
+  <div class="post-navigation" style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #ddd;">
+    <div class="post-nav-prev" style="max-width: 48%;">
+      {% if page.next.url %}
+        <div>&larr; 下一篇</div>
+        <a href="{{ page.next.url }}">{{ page.next.title }}</a>
+      {% endif %}
+    </div>
+    <div class="post-nav-next" style="max-width: 48%; text-align: right;">
+      {% if page.previous.url %}
+        <div>上一篇 &rarr;</div>
+        <a href="{{ page.previous.url }}">{{ page.previous.title }}</a>
+      {% endif %}
+    </div>
+  </div>  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+</article>

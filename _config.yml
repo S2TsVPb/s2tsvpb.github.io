@@ -30,16 +30,8 @@ github_username:  S2TsVPb
 # Build settings
 theme: minima
 
-minima: 
-  hide_site_feed_link: true
-  social_links:
-    - { platform: github, user_url: "https://github.com/S2TsVPb" }
-
 plugins: 
   - jekyll-feed
-
-feed: 
-  stylesheet: "/feed.xsl"            # 让 feed.xml 在浏览器中应用美观的 XSL 样式
 
 # Exclude from processing.
 # The following items will not be processed, by default.
