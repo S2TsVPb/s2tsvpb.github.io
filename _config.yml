@@ -30,8 +30,15 @@ github_username:  S2TsVPb
 # Build settings
 theme: minima
 
+minima:
+  skin: dark
+
 plugins: 
   - jekyll-feed
+
+header_pages:
+  - about.markdown   # 如果你有 about 页面，请包含它
+  - search.md        # 搜索页面
 
 # Exclude from processing.
 # The following items will not be processed, by default.

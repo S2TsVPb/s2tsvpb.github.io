@@ -1,0 +1,65 @@
+<!-- 深色模式切换按钮样式 -->
+<style>
+  #theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--link-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  #theme-toggle:hover {
+    transform: scale(1.1);
+  }
+</style>
+<button id="theme-toggle" aria-label="切换深色模式">🌓</button>
+
+<script>
+  (function() {
+    var toggle = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function getStoredTheme() {
+      return localStorage.getItem('theme');
+    }
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+        toggle.textContent = '☀️';
+      } else {
+        root.removeAttribute('data-theme');
+        toggle.textContent = '🌙';
+      }
+    }
+
+    var storedTheme = getStoredTheme();
+    if (storedTheme) {
+      applyTheme(storedTheme);
+    } else {
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(prefersDark ? 'dark' : 'light');
+    }
+
+    toggle.addEventListener('click', function() {
+      var currentTheme = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      var newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', newTheme);
+      applyTheme(newTheme);
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+      if (!getStoredTheme()) {
+        applyTheme(e.matches ? 'dark' : 'light');
+      }
+    });
+  })();
+</script>

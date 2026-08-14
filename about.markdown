@@ -30,3 +30,6 @@ permalink: /about/
 - GitHub: [S2TsVPb](https://github.com/S2TsVPb)
 - 邮箱：`xuyixuan3236@126.com`
   
+## 友情链接
+
+- [ou627](https://ou627.github.io/) - 我的朋友的主页  

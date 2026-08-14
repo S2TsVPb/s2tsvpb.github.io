@@ -1,0 +1,40 @@
+---
+---
+
+@import "minima";
+
+/* 深色模式变量 */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --link-color: #0366d6;
+  --border-color: #e5e5e5;
+}
+
+html[data-theme="dark"] {
+  --bg-color: #1a1a1a;
+  --text-color: #e0e0e0;
+  --link-color: #66b3ff;
+  --border-color: #333333;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+a { color: var(--link-color); }
+
+.site-header, .site-footer, .page-content, .post-content {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.site-title, .site-title:visited, .site-nav .page-link {
+  color: var(--text-color);
+}
+
+.post-content, .page-content {
+  border-color: var(--border-color);
+}
