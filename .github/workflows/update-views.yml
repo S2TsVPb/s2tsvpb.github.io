@@ -46,7 +46,7 @@ jobs:
                   if not fn.endswith('.html') or fn == 'index.html':
                       continue
                   full = os.path.join(root, fn).replace(os.sep, '/')
-                  if re.search(r'/_site/(essays|resources)/', full):
+                  if re.match(r'_site/(essays|resources)/', full):
                       paths.append(full[len('_site'):])
 
           views = {}
