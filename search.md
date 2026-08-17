@@ -12,27 +12,29 @@ permalink: /search/
     width: 100%;
     padding: 12px 16px;
     font-size: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 6px;
     margin-bottom: 20px;
     box-sizing: border-box;
+    background: var(--bg-color);
+    color: var(--text-color);
     transition: border-color 0.2s;
   }
   #search-input:focus {
     outline: none;
-    border-color: #0366d6;
+    border-color: var(--link-color);
     box-shadow: 0 0 0 3px rgba(3,102,214,0.1);
   }
   #results-container { list-style: none; padding: 0; margin: 0; }
   #results-container li {
     padding: 16px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
   }
   .result-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-  .result-title a { text-decoration: none; color: #0366d6; }
+  .result-title a { text-decoration: none; color: var(--link-color); }
   .result-title a:hover { text-decoration: underline; }
   .result-meta { color: #888; font-size: 0.85rem; margin-bottom: 6px; }
-  .result-snippet { color: #444; line-height: 1.5; }
+  .result-snippet { color: var(--text-color); line-height: 1.5; }
   .no-results { text-align: center; padding: 40px 0; color: #999; }
   /* 高亮样式 */
   mark {
@@ -48,7 +50,7 @@ permalink: /search/
 </style>
 
 <div id="search-container">
-  <input type="text" id="search-input" placeholder="输入关键词搜索文章..." autofocus>
+  <input type="text" id="search-input" placeholder="输入关键词搜索文章..." aria-label="搜索文章" autofocus>
   <ul id="results-container"></ul>
 </div>
 
