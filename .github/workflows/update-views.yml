@@ -39,7 +39,9 @@ jobs:
           # API v0: stats/total + include_paths + path_by_name=1 返回该路径总浏览量
           base = f'https://{site}.goatcounter.com/api/v0/stats/total'
 
-          # 从构建产物中收集文章页路径（形如 /essays/2026/07/25/标题.html）
+          # 从构建产物中收集文章页路径，并转成 page.url 的 URL 编码形式
+          # （磁盘文件名是中文，但 Jekyll 的 page.url 和 GoatCounter 记录的
+          #  都是编码形式，如 /essays/2026/07/25/%E6%AC%A2...html）
           paths = []
           for root, _dirs, files in os.walk('_site'):
               for fn in files:
@@ -47,11 +49,12 @@ jobs:
                       continue
                   full = os.path.join(root, fn).replace(os.sep, '/')
                   if re.match(r'_site/(essays|resources)/', full):
-                      paths.append(full[len('_site'):])
+                      p = full[len('_site'):]
+                      paths.append(urllib.parse.quote(p, safe='/'))
 
           views = {}
           for p in sorted(set(paths)):
-              url = base + '?path_by_name=1&include_paths=' + urllib.parse.quote(p, safe='')
+              url = base + '?path_by_name=1&include_paths=' + p
               req = urllib.request.Request(url, headers={
                   'Authorization': 'Bearer ' + token,
                   'Content-Type': 'application/json',
