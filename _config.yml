@@ -18,5 +18,6 @@ plugins:
   - jekyll-sitemap
 
 header_pages:
-  - about.markdown   # 关于我页面
-  - search.md        # 搜索页面
+  - articles.md       # 文章列表
+  - search.md         # 搜索页面
+  - about.markdown    # 关于我页面

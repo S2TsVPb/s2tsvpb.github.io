@@ -1,0 +1,73 @@
+---
+layout: default
+---
+
+<div class="home">
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  {{ content }}
+
+  {%- if site.posts.size > 0 -%}
+    <h2 class="post-list-heading">{{ page.list_title | default: "最近发布" }}</h2>
+    <ul class="post-list">
+      {%- for post in site.posts -%}
+      <li{% if forloop.index > 5 %} class="post-older" style="display:none;"{% endif %}>
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        <h3>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }}
+          </a>
+        </h3>
+        {%- if site.show_excerpts -%}
+          {{ post.excerpt }}
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if site.posts.size > 5 -%}
+    <button id="toggle-more" class="toggle-more-btn">展开更多文章 ▾</button>
+    <script>
+      (function() {
+        var btn = document.getElementById('toggle-more');
+        if (!btn) return;
+        var older = document.querySelectorAll('.post-older');
+        var expanded = false;
+        btn.addEventListener('click', function() {
+          expanded = !expanded;
+          for (var i = 0; i < older.length; i++) {
+            older[i].style.display = expanded ? '' : 'none';
+          }
+          btn.textContent = expanded ? '收起 ▴' : '展开更多文章 ▾';
+        });
+      })();
+    </script>
+    {%- endif -%}
+
+    <p class="rss-subscribe">订阅 <a href="{{ '/feed.xml' | relative_url }}">RSS</a></p>
+  {%- endif -%}
+
+  <style>
+    .toggle-more-btn {
+      display: block;
+      width: 100%;
+      margin: 1.2rem 0 0.5rem;
+      padding: 0.6rem;
+      background: transparent;
+      border: 1px dashed var(--border-color);
+      border-radius: 8px;
+      color: var(--link-color);
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .toggle-more-btn:hover {
+      border-color: var(--link-color);
+    }
+  </style>
+
+</div>
