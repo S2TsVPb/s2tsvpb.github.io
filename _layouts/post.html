@@ -13,6 +13,10 @@ layout: default
       {%- if page.author -%}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
       {%- endif -%}
+      {%- assign pv = site.data.views[page.url] -%}
+      {%- if pv != nil -%}
+        • <span class="post-views" title="浏览量">浏览量：{{ pv }}</span>
+      {%- endif -%}
     </p>
   </header>
 

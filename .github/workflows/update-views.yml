@@ -1,0 +1,79 @@
+name: Update views
+
+on:
+  schedule:
+    - cron: '17 3 * * *'   # 每天 UTC 03:17（北京时间 11:17）更新一次
+  workflow_dispatch: {}    # 也可以手动触发
+  push:
+    branches: [master, main]
+    paths-ignore: ['_data/views.json']   # 避免自动提交 views.json 时再次触发
+
+permissions:
+  contents: write
+
+jobs:
+  update-views:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 构建站点，拿到每篇文章的真实 URL（page.url）
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+
+      - name: Build site
+        run: bundle exec jekyll build
+
+      - name: Fetch view counts and write _data/views.json
+        env:
+          GC_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+          GC_SITE: s2tsvpb
+        run: |
+          python3 - <<'PY'
+          import json, os, re, urllib.parse, urllib.request
+
+          token = os.environ['GC_TOKEN']
+          site = os.environ['GC_SITE']
+          # API v0: stats/total + include_paths + path_by_name=1 返回该路径总浏览量
+          base = f'https://{site}.goatcounter.com/api/v0/stats/total'
+
+          # 从构建产物中收集文章页路径（形如 /essays/2026/07/25/标题.html）
+          paths = []
+          for root, _dirs, files in os.walk('_site'):
+              for fn in files:
+                  if not fn.endswith('.html') or fn == 'index.html':
+                      continue
+                  full = os.path.join(root, fn).replace(os.sep, '/')
+                  if re.search(r'/_site/(essays|resources)/', full):
+                      paths.append(full[len('_site'):])
+
+          views = {}
+          for p in sorted(set(paths)):
+              url = base + '?path_by_name=1&include_paths=' + urllib.parse.quote(p, safe='')
+              req = urllib.request.Request(url, headers={
+                  'Authorization': 'Bearer ' + token,
+                  'Content-Type': 'application/json',
+              })
+              try:
+                  with urllib.request.urlopen(req, timeout=20) as r:
+                      data = json.load(r)
+                  # stats/total 响应: {"total": N, "total_events": N, ...}
+                  n = data.get('total') if isinstance(data, dict) else None
+                  if isinstance(n, (int, float)):
+                      views[p] = int(n)
+              except Exception as e:
+                  print('skip', p, repr(e))
+
+          os.makedirs('_data', exist_ok=True)
+          with open('_data/views.json', 'w', encoding='utf-8') as f:
+              json.dump(views, f, ensure_ascii=False, indent=2)
+          print('views.json =', json.dumps(views, ensure_ascii=False))
+          PY
+
+      - name: Commit views.json
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: 更新文章浏览量'
+          file_pattern: '_data/views.json'
