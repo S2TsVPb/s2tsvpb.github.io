@@ -83,6 +83,18 @@ permalink: /articles/
 
   <div class="cat-section">
     <div class="cat-head">
+      <h2>📓 进步报告 progris riport</h2>
+      <span class="cat-count">{{ site.categories["progris riport"] | size }} 篇</span>
+    </div>
+    {% for post in site.categories["progris riport"] %}
+    <div class="post-entry">
+      <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="cat-section">
+    <div class="cat-head">
       <h2>🖼️ 画廊 gallery</h2>
       <span class="cat-count">{{ site.categories.gallery | size }} 篇</span>
     </div>
@@ -106,6 +118,7 @@ permalink: /articles/
     var groups = [
       { key: 'essays', title: '📝 随笔集 essays' },
       { key: 'resources', title: '📦 资源分享 resources' },
+      { key: 'progris riport', title: '📓 进步报告 progris riport' },
       { key: 'gallery', title: '🖼️ 画廊 gallery' }
     ];
 
