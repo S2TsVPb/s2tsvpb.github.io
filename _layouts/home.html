@@ -29,7 +29,7 @@ layout: default
     </ul>
 
     {%- if site.posts.size > 5 -%}
-    <button id="toggle-more" class="toggle-more-btn">展开更多文章 ▾</button>
+    <button id="toggle-more" class="toggle-more-btn">查看更多 ▾</button>
     <script>
       (function() {
         var btn = document.getElementById('toggle-more');
@@ -41,7 +41,7 @@ layout: default
           for (var i = 0; i < older.length; i++) {
             older[i].style.display = expanded ? '' : 'none';
           }
-          btn.textContent = expanded ? '收起 ▴' : '展开更多文章 ▾';
+          btn.textContent = expanded ? '收起 ▴' : '查看更多 ▾';
         });
       })();
     </script>
@@ -54,13 +54,13 @@ layout: default
     .toggle-more-btn {
       display: block;
       width: 100%;
-      margin: 1.2rem 0 0.5rem;
-      padding: 0.6rem;
+      margin: 1rem 0 0.4rem;
+      padding: 0.35rem 0;
       background: transparent;
       border: 1px dashed var(--border-color);
-      border-radius: 8px;
+      border-radius: 6px;
       color: var(--link-color);
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       font-family: inherit;
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;

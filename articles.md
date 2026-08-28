@@ -22,6 +22,24 @@ permalink: /articles/
   .entry-date { font-size: 0.78rem; color: var(--muted); margin-left: 0.5rem; }
   .entry-excerpt { font-size: 0.85rem; color: var(--muted); margin: 0.25rem 0 0; line-height: 1.6; }
   .empty-tip { font-size: 0.85rem; color: var(--muted); padding: 0.5rem 0; }
+
+  .post-more { display: none; }
+  .post-more.show { display: block; }
+  .more-btn {
+    display: block;
+    width: 100%;
+    margin: 1rem 0 0.4rem;
+    padding: 0.35rem 0;
+    background: transparent;
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+    color: var(--link-color);
+    font-size: 0.82rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .more-btn:hover { border-color: var(--link-color); }
   /* 搜索框 */
   #articles-search { margin-bottom: 1.5rem; }
   #articles-search-input {
@@ -63,10 +81,13 @@ permalink: /articles/
       <span class="cat-count">{{ site.categories.essays | size }} 篇</span>
     </div>
     {% for post in site.categories.essays %}
-    <div class="post-entry">
+    <div class="post-entry{% if forloop.index > 3 %} post-more{% endif %}">
       <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </div>
     {% endfor %}
+    {% if site.categories.essays.size > 3 %}
+    <button type="button" class="more-btn">查看更多 ▾</button>
+    {% endif %}
   </div>
 
   <div class="cat-section">
@@ -75,22 +96,13 @@ permalink: /articles/
       <span class="cat-count">{{ site.categories.resources | size }} 篇</span>
     </div>
     {% for post in site.categories.resources %}
-    <div class="post-entry">
+    <div class="post-entry{% if forloop.index > 3 %} post-more{% endif %}">
       <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </div>
     {% endfor %}
-  </div>
-
-  <div class="cat-section">
-    <div class="cat-head">
-      <h2>📓 进步报告 progris riport</h2>
-      <span class="cat-count">{{ site.categories["progris riport"] | size }} 篇</span>
-    </div>
-    {% for post in site.categories["progris riport"] %}
-    <div class="post-entry">
-      <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    </div>
-    {% endfor %}
+    {% if site.categories.resources.size > 3 %}
+    <button type="button" class="more-btn">查看更多 ▾</button>
+    {% endif %}
   </div>
 
   <div class="cat-section">
@@ -99,12 +111,30 @@ permalink: /articles/
       <span class="cat-count">{{ site.categories.gallery | size }} 篇</span>
     </div>
     {% for post in site.categories.gallery %}
-    <div class="post-entry">
+    <div class="post-entry{% if forloop.index > 3 %} post-more{% endif %}">
       <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </div>
     {% endfor %}
+    {% if site.categories.gallery.size > 3 %}
+    <button type="button" class="more-btn">查看更多 ▾</button>
+    {% endif %}
     {% if site.categories.gallery.size == 0 %}
     <p class="empty-tip">画廊暂时还没有内容，敬请期待 🌱</p>
+    {% endif %}
+  </div>
+
+  <div class="cat-section">
+    <div class="cat-head">
+      <h2>📓 进步报告 progris riport</h2>
+      <span class="cat-count">{{ site.categories["progris riport"] | size }} 篇</span>
+    </div>
+    {% for post in site.categories["progris riport"] %}
+    <div class="post-entry{% if forloop.index > 3 %} post-more{% endif %}">
+      <a class="entry-title" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </div>
+    {% endfor %}
+    {% if site.categories["progris riport"].size > 3 %}
+    <button type="button" class="more-btn">查看更多 ▾</button>
     {% endif %}
   </div>
 </div>
@@ -118,8 +148,8 @@ permalink: /articles/
     var groups = [
       { key: 'essays', title: '📝 随笔集 essays' },
       { key: 'resources', title: '📦 资源分享 resources' },
-      { key: 'progris riport', title: '📓 进步报告 progris riport' },
-      { key: 'gallery', title: '🖼️ 画廊 gallery' }
+      { key: 'gallery', title: '🖼️ 画廊 gallery' },
+      { key: 'progris riport', title: '📓 进步报告 progris riport' }
     ];
 
     // 加载 search.json（与原搜索页同一数据源）
@@ -230,5 +260,27 @@ permalink: /articles/
     input.addEventListener('input', function() {
       if (!composing) performSearch(input.value);
     });
+  })();
+</script>
+
+<script>
+  /* 分区“点此查看更多”展开/收起 */
+  (function() {
+    var btns = document.querySelectorAll('.more-btn');
+    for (var i = 0; i < btns.length; i++) {
+      (function(btn) {
+        btn.addEventListener('click', function() {
+          var section = btn.closest('.cat-section');
+          if (!section) return;
+          var more = section.querySelectorAll('.post-more');
+          var expanded = btn.getAttribute('data-open') === '1';
+          for (var j = 0; j < more.length; j++) {
+            more[j].classList.toggle('show', !expanded);
+          }
+          btn.setAttribute('data-open', expanded ? '0' : '1');
+          btn.textContent = expanded ? '查看更多 ▾' : '收起 ▴';
+        });
+      })(btns[i]);
+    }
   })();
 </script>
