@@ -4,6 +4,8 @@ title: 关于我
 permalink: /about/
 ---
 
+![不想开学](\assets\images\about\about_img1.jpg){: loading="lazy" style="display: block; margin: 0 auto;"}
+
 ## 你好，我是 S2TsVPb
 
 来自江苏南京，高中毕业于南师大附中，目前就读于**浙江大学竺可桢学院混合班**，主修计算机科学与技术。
